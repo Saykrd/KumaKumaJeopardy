@@ -106,11 +106,11 @@ class Game {
 
         // Load game sounds
         this.soundLoader = new SoundLoader(() => this.onSoundLoaded());
-        this.soundLoader.add('naruto.mp3', 'sound/naruto.mp3');
-        this.soundLoader.add('hunterxhunter.mp3', 'sound/hunterxhunter.mp3');
-        this.soundLoader.add('demonslayer.mp3', 'sound/demonslayer.mp3');
-        this.soundLoader.add('souleater.mp3', 'sound/souleater.mp3');
-        this.soundLoader.add('yuyuhakusho.mp3', 'sound/yuyuhakusho.mp3');
+        this.soundLoader.add('Digimon.mp3', 'sound/Digimon.mp3');
+        this.soundLoader.add('Attack on Titan Final Season Opening 2  The Rumbling.mp3', 'sound/Attack on Titan Final Season Opening 2  The Rumbling.mp3');
+        this.soundLoader.add('Oshi no Ko Opening - IDOL.mp3', 'sound/Oshi no Ko Opening - IDOL.mp3');
+        this.soundLoader.add('Jujutsu Kaisen Opening 4 - SPECIALZ.mp3', 'sound/Jujutsu Kaisen Opening 4 - SPECIALZ.mp3');
+        this.soundLoader.add('CHAINSAW MAN Opening - KICK BACK.mp3', 'sound/CHAINSAW MAN Opening - KICK BACK.mp3');
         this.soundLoader.load();
 
         //Add update function to pixi ticker
@@ -283,7 +283,13 @@ class SoundLoader {
         Object.entries(this.resources).forEach(([k,e]) => {
             console.log(`Loading sound ${k} from ${e.url}`);
             let sound = new Howl({
-                src : e.url
+                src : e.url,
+                sprite: {
+                    four: [0, 3000],
+                    six: [0, 5000],
+                    seven: [0, 7000],
+                    full: [0, 30000]
+                  }
             });
 
             e.sound = sound;
@@ -525,19 +531,32 @@ class OptionScreen extends PIXI.Container {
             if(this.onConfirm) this.onConfirm(this.currentCategory  , this.currentOption.value, true);
             this.onBack();
         }
+        if(e.code == 'KeyP') {
+            this.onPlay('four');
+        }
+        if(e.code == 'KeyO') {
+            this.onPlay('six');
+        }
+        if(e.code == 'KeyI') {
+            this.onPlay('seven');
+        }
+        if(e.code == 'KeyF') {
+            this.onPlay();
+        }
     }
 
 
-    onPlay() {
-        console.log('onPlay');
-
+    onPlay(e) {
         let resource = game.soundLoader.resources[this.sound];
-
+        this.play.visible = false;
+        this.pause.visible = true;
         if(resource) {
-            resource.sound.play();
-
-            this.play.visible = false;
-            this.pause.visible = true;
+            if (e === undefined || e == null || e == "undefined") {
+                resource.sound.play('full');
+            }                
+            else {
+                resource.sound.play(e);
+            }
         }
     }
 

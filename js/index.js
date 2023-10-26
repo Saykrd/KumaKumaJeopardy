@@ -6,7 +6,7 @@ app.whenReady().then(() => {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1728,
+  width: 1728,
     height: 1117,
     fullscreen: true,
   });

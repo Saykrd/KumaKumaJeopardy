@@ -161,7 +161,6 @@ class Game {
         starContainer.emitter = new PIXI.particles.Emitter(starContainer, PIXI.particles.upgradeConfig(this.loader.resources.starEmitter.data, [this.loader.resources.star.texture]));
         starContainer.emitter.autoUpdate = true;
 
-        starContainer.y -= 1000;
         this.screen.addChild(starContainer);
 
         this.starContainer = starContainer;
